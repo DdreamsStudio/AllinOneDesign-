@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-width, initial-scale=1.0">
+    <title>Dreams Studio Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        img {
+            width: 200px;
+            height: auto;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="email"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <img src="https://raw.githubusercontent.com/DdreamsStudio/AllinOneDesign-/refs/heads/main/1.png" alt="Dreams Studio Logo">
+    </div>
+
+    <!-- Payment Form -->
+    <form id="paymentForm">
+        <h2>Enter Your Email to Pay</h2>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button type="button" onclick="payWithPaystack()">Pay $35</button>
+    </form>
+
+    <!-- Paystack Script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        function payWithPaystack() {
+            let email = document.getElementById('email').value;
+
+            if (!email) {
+                alert('Please enter your email');
+                return;
+            }
+
+            let handler = PaystackPop.setup({
+                key: 'pk_live_742d973a21ac0e002db0d9632e99b90aac454274', // Your Paystack public key
+                email: email,
+                amount: 35 * 100, // Amount in cents (e.g., $35.00)
+                currency: 'USD', // Set currency to USD
+                callback: function(response) {
+                    alert('Payment complete! Reference: ' + response.reference);
+                    window.location.href = "https://docs.google.com/document/d/1XIZhMnXeZtnB-Ha0bkVLMmD6Zhjbq7oyGNKZ_tQYXYw/edit?usp=drivesdk"; // Redirect after payment
+                },
+                onClose: function() {
+                    alert('Transaction was not completed.');
+                }
+            });
+            
+            handler.openIframe();
+        }
+    </script>
+</body>
+</html>
